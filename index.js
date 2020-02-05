@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const userRouter = require('./route/users');
 const uploadRouter = require('./route/upload');
-//const productRouter = require('./route/product');
+const productRouter = require('./route/product');
 const dotenv = require('dotenv').config();
 const auth = require('./middleware/auth');
 
@@ -28,8 +28,8 @@ mongoose.connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: t
 
     app.use('/users', userRouter);
     app.use('/upload', uploadRouter);
-    app.use(auth.verifyUser);
-   //app.use('/product', productRouter);
+    // app.use(auth.verifyUser);
+   app.use('/product', productRouter);
     app.use((err, req, res, next) => {
         console.error(err.stack);
         res.statusCode = 500;
