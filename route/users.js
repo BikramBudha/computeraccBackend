@@ -51,7 +51,13 @@ router.post('/login', (req, res, next) => {
         }).catch(next);
 });
 router.get('/me', auth.verifyUser, (req, res, next) => {
-    res.json({ _id: req.user._id, email:req.body.email, username: req.user.username, image: req.user.image });
+    // res.json({ _id: req.user._id, email:req.body.email, username: req.user.username, image: req.user.image });
+    User.findById({_id:req.user._id})
+    .then((user)=>{
+        res.send(user)
+    }).catch((error)=>{
+        res.status(500).send(error);
+    })
 });
 
 
@@ -68,6 +74,34 @@ router.post("/check",(req,res,next)=>{
         }
     })
 })
+
+router.put('/update/:id',  (req, res, next) => {
+    console.log("chalyo")
+ User.findById(req.params.id)  
+ .then((user)=>{
+    user._id=req.params.id
+    user.image=req.body.image
+    user.email=req.body.email
+    user.username=req.body.username
+    user.password=req.body.password
+  
+
+    user.save()
+    .then((user)=>{ 
+        res.json(user)
+    }).catch(next)
+    })
+
+    });
+
+
+
+    router.delete('/delete/:id',  (req, res, next) => {
+        User.findByIdAndDelete(req.userid)
+            .then((user) => {
+                res.json({ status: 'User deleted!', User: user })
+            }).catch(next);
+    });
 
 
 

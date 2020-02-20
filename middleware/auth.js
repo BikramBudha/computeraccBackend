@@ -19,6 +19,8 @@ module.exports.verifyUser = (req, res, next) => {
         .then((user) => {
             req.user = user;
             next();
-        })
+        });
+
+   
 }
 

@@ -19,7 +19,12 @@ const productSchema=new mongoose.Schema({
     price: {
         type: String,
         required: true
+    },
+    phoneno: {
+        type: String,
+        required: true
     }
+   
    
     
     
